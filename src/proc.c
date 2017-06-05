@@ -11,6 +11,7 @@
  */
 #include "include/proc.h"
 #include "include/hide.h"
+#include "include/config.h"
 
 
 /*

@@ -1,5 +1,5 @@
-#include "include/proc.h"
 #include "include/hide.h"
+#include "include/config.h"
 
 static char module_hidden = 0;
 static struct list_head *module_previous;
