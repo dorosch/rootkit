@@ -7,7 +7,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Doroshenko Andrey");
 MODULE_DESCRIPTION("\"rootkit\" module");
-MODULE_VERSION("0.02");
+MODULE_VERSION("0.04");
 
 
 static int __init rootkit_module_init(void) {

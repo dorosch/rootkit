@@ -2,6 +2,7 @@
 #define __PROC_H__
 
 #include <linux/proc_fs.h>
+#include <linux/string.h>
 
 #define PROC_FILE_NAME "rootkit"
 
