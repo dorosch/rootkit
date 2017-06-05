@@ -14,23 +14,18 @@ assemble the module:
 $ make
 ```
 
-Next, you need to load a module:
-
-```Bash
-$ sudo insmod ./src/rootkit.ko
-```
-
 For debugging, messages are sent to the kernel level. To 
-view them:
+view them use `dmesg`. Next, you need to load a module:
 
 ```Bash
+$ make install
 $ dmesg | tail
 ```
 
 After the test, unload the module:
 
 ```Bash
-$ sudo rmmod rootkit
+$ make uninstall
 $ dmesg | tail
 ```
 

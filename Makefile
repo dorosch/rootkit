@@ -1,8 +1,10 @@
+MODULENAME=rootkit
+
 # obj-m is a list of what kernel modules to build.  The .o and other
 # objects will be automatically built from the corresponding .c file -
 # no need to list the source files explicitly.
-
-obj-m := src/rootkit.o 
+obj-m := $(MODULENAME).o
+$(MODULENAME)-objs := src/proc.o src/rootkit.o
 
 # KDIR is the location of the kernel source.  The current standard is
 # to link to the associated source tree from the directory containing
@@ -19,14 +21,20 @@ PWD   := $(shell pwd)
 default:
 	$(MAKE) -C $(KDIR) M=$(PWD) modules
 
+install:
+	sudo insmod $(MODULENAME).ko
+
+uninstall:
+	sudo rmmod $(MODULENAME)
+
 # Clean up the working directory from temporary files created when 
 # the kernel module is compiled.
 clean:
 	rm -f Module.symvers
 	rm -f modules.order
-	rm -f src/*.ko
-	rm -f src/*.mod.c
-	rm -f src/*.mod.o
-	rm -f src/*.o
 	rm -rf .tmp_versions
-	find . -name *.cmd | xargs rm -rf
+	find . -name '*.ko' | xargs rm -f
+	find . -name '*.cmd' | xargs rm -f
+	find . -name '*.mod.c' | xargs rm -f
+	find . -name '*.mod.o' | xargs rm -f
+	find . -name '*.o' | xargs rm -f
