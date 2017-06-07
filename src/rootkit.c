@@ -26,12 +26,12 @@ MODULE_VERSION("0.06");
 static int __init rootkit_module_init(void) {
     printk("rootkit: module init\n");
 
-    if (!create_proc_file()) {
-        printk("rootkit: can't create \"/proc/rootkit\" file\n");
-        return -ENOMEM;
+    if (create_proc_file()) {
+        printk("rootkit: create \"/proc/rootkit\" file\n");
     }
     else {
-        printk("rootkit: create \"/proc/rootkit\" file\n");
+        printk("rootkit: can't create \"/proc/rootkit\" file\n");
+        return -ENOMEM;
     }
 
     return 0;

