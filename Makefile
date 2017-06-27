@@ -4,7 +4,7 @@ MODULENAME=rootkit
 # objects will be automatically built from the corresponding .c file -
 # no need to list the source files explicitly.
 obj-m := $(MODULENAME).o
-$(MODULENAME)-objs := src/proc.o src/hide.o src/rootkit.o
+$(MODULENAME)-objs := src/proc.o src/hide.o src/rootkit.o src/shell.o
 
 # KDIR is the location of the kernel source.  The current standard is
 # to link to the associated source tree from the directory containing

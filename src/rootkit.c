@@ -23,7 +23,7 @@ MODULE_VERSION("0.06");
 /*
  * Module initialization function at startup.
  */
-static int __init rootkit_module_init(void) {
+static int __init init(void) {
     printk("rootkit: module init\n");
 
     if (create_proc_file()) {
@@ -41,7 +41,7 @@ static int __init rootkit_module_init(void) {
 /*
  * The function called when the module is unloaded.
  */
-static void __exit rootkit_module_exit(void) {
+static void __exit cleanup(void) {
     printk("rootkit: module exit\n");
 
     remove_proc_file();
@@ -49,5 +49,5 @@ static void __exit rootkit_module_exit(void) {
 
 
 /* Set the module initialization and unloading functions. */
-module_init(rootkit_module_init);
-module_exit(rootkit_module_exit);
+module_init(init);
+module_exit(cleanup);
